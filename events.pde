@@ -71,8 +71,8 @@ void controlEvent(ControlEvent theEvent) {
   if (theEvent.getController().getName() == "Choisir") {
       selectInput("Choisir une image (jpg, jpeg ou png) : ", "fileSelected");
   } else if (theEvent.getController().getName() == "Exporter") {
-    message("Exporting in progress");
-    record = true;
+    choooseExportFile = true;
+    messageExport = true;
   } else if (theEvent.getController().getName() == "Webcam") {
     message("Initializing video");
     capture = true;

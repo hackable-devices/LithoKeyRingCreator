@@ -21,6 +21,8 @@ PImage img ; // image object
 
 // Toggles
 boolean record;
+boolean choooseExportFile = false;
+boolean messageExport = false;
 boolean capture;
 boolean inverse;
 boolean square = true;
@@ -28,7 +30,7 @@ boolean scaleDown = true;
 boolean blur;
 
 // Anchor for keyring
-boolean keyring;
+boolean keyring = true;
 float L = 10; // half-width of keyring
 float e = 2; // width or ring
 int def = 16; // number of points on inner circle
@@ -41,7 +43,7 @@ float rotYT, rotXT = 30 ;
 float zoom = 5;
 
 /// Pixel Ratio
-int px_ratio = 5; // 5px ==> 1 mm
+int px_ratio = 4; // 5px ==> 1 mm
 
 // Offset
 float offset = 10;
@@ -53,6 +55,7 @@ float max_val; float min_val;
 boolean preloaded = false ;
 float hauteur = 100 ;
 String filename = "example.jpg" ; // Must be in "/data"
+String export_filename = "example.stl" ; // Must be in "/data"
 boolean showGrid = true ;
 
 // Gaussian blur kernel
@@ -112,8 +115,14 @@ void draw() {
 
   if ( preloaded ) {
 
+    if (choooseExportFile == true) {
+      selectOutput("Où voulez-vous exporter le fichier STL ?", "exportFileChosen");
+      choooseExportFile = false;
+    }
+    
     if (record == true) { // Ready to Record ? ...
-      rec(); // ... go on !
+
+      rec();
     }
     
     if (capture == true) { // Display webcam
@@ -127,10 +136,12 @@ void draw() {
     // Drawing the shape extruded from the image according to the brightness values
     if (!record && !capture && !capture_ready) {
       
+      if (messageExport == true && choooseExportFile == false) { message("Exporting in progress"); }
       pushMatrix();
       translate(5*width/9, height/2);
       rotateY(radians(rotY));
       rotateX(radians(rotX));
+      rotateZ(radians(180));
       renderLoop();
       
       view();
@@ -244,14 +255,33 @@ void checkPixels() {
 
 
 // Records the data inside a STL buffer in unlekker
+void exportFileChosen(File selection) {
+ 
+ if (selection != null) {
+    
+    export_filename = selection.getAbsolutePath();
+    int l = export_filename.length();
+    String extension = ".STL";
+    if (export_filename.substring(l-4,l).toUpperCase().equals(extension) == false) {
+      export_filename = export_filename + ".STL";
+    }
+    
+ }
+ 
+ record = true;
+
+}
+
 void rec() {
-  
-  beginRaw("unlekker.data.STL", filename+".stl");
+
+  beginRaw("unlekker.data.STL", export_filename);
     print("begin .. ");
     renderLoop();
   endRaw();
   println(" .. end");
   record = false;
+  messageExport = false;
+  
 }
 
 void capture() {
@@ -330,6 +360,7 @@ void renderLoop() {
   y_min = floor(resY/2);
   y_max = ceil(resY/2);
 
+  rotateZ(radians(180));
   colorMode(HSB, 255);
   noFill();
   

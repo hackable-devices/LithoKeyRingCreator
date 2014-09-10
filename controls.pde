@@ -23,15 +23,15 @@ void makeControls() {
   controlP5.addToggle("lisser", false, 55, 185, 15, 15);
   controlP5.addToggle("reduire", true, 85, 185, 15, 15);
   
-  controlP5.addSlider("px_ratio", 4, 10, 5, 25, 270, 150, 15);
+  controlP5.addSlider("px_ratio", 4, 10, 4, 25, 270, 150, 15);
   Slider s0 = (Slider)controlP5.controller("px_ratio");
   s0.setLabel("pixel / mm");
   s0.setNumberOfTickMarks(11);
   
-  controlP5.addSlider("hauteur", 0, 60, 10, 25, 325, 150, 15);
+  controlP5.addSlider("hauteur", 0, 60, 15, 25, 325, 150, 15);
   Slider s1 = (Slider)controlP5.controller("hauteur");
   s1.setLabel("hauteur (1/10mm )");
-  s1.setNumberOfTickMarks(31);
+  s1.setNumberOfTickMarks(61);
   
   controlP5.addSlider("offset", 1, 10, 1, 25, 355, 150, 15);
   Slider s2 = (Slider)controlP5.controller("offset");
@@ -40,7 +40,7 @@ void makeControls() {
 
   controlP5.addToggle("inverser", false, 25, 385, 15, 15);
   
-  controlP5.addToggle("activer", false, 25, 530, 15, 15);
+  controlP5.addToggle("activer", true, 25, 530, 15, 15);
   
   controlP5.addSlider("largeur", 5, 50, 20, 25, 470, 150, 15);
   Slider s4 = (Slider)controlP5.controller("largeur");
