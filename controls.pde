@@ -22,6 +22,7 @@ void makeControls() {
   controlP5.addToggle("ratio", true, 25, 185, 15, 15);
   controlP5.addToggle("lisser", false, 55, 185, 15, 15);
   controlP5.addToggle("reduire", true, 85, 185, 15, 15);
+  controlP5.addToggle("retourner", false, 125, 185, 15, 15);
   
   controlP5.addSlider("px_ratio", 4, 10, 4, 25, 270, 150, 15);
   Slider s0 = (Slider)controlP5.controller("px_ratio");
@@ -198,6 +199,12 @@ void grille(boolean theFlag) {
 
 void activer(boolean theFlag) {
   keyring = theFlag;
+}
+
+void retourner(boolean theFlag) {
+  flip = theFlag;
+  load_image();
+  checkPixels();
 }
 
 void ratio(boolean theFlag) {

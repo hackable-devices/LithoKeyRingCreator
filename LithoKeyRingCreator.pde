@@ -25,6 +25,7 @@ boolean choooseExportFile = false;
 boolean messageExport = false;
 boolean capture;
 boolean inverse;
+boolean flip = false;
 boolean square = true;
 boolean scaleDown = true;
 boolean blur;
@@ -242,9 +243,9 @@ void checkPixels() {
   for (int x =0; x<resX; x++) {
     for (int y =0; y<resY; y++) {      
       if ( !inverse ) {
-        val[x][y] = (-brightness(img.get(x, y))+255)/255*hauteur;
+        val[x][y] = (-brightness(img.get((flip)?x:(resX-x), y))+255)/255*hauteur;
       } else { 
-        val[x][y] = brightness(img.get(x, y))/255*hauteur;
+        val[x][y] = brightness(img.get((flip)?x:(resX-x), y))/255*hauteur;
       }
       max_val = max(max_val, abs(val[x][y]));
       min_val = min(min_val, abs(val[x][y]));
